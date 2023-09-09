@@ -54,7 +54,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
 	}
 
 	log('-------------------------------------------------');
-	//await storeImages(imagesLocation);
+	// await storeImages(imagesLocation);
 	// const args = [
 	// 	vrfCoordinatorV2Address,
 	// 	subscriptionId,
@@ -69,17 +69,18 @@ async function handleTokenUris() {
 	tokenUris = [];
 	// store the image in IPFS
 	// store the metadata in IPFS
-	const { reponses: imageUploadReponses, files } =
+	const { reponses: imageUploadResponses, files } =
 		await storeImages(imagesLocation);
-	for (let imageUploadReponseIndex in imageUploadReponses) {
+	for (let imageUploadResponseIndex in imageUploadResponses) {
 		let tokenUriMetadata = { ...metaDataTemplate };
-		tokenUriMetadata.name = files[imageUploadReponseIndex].replace('.png', '');
+		tokenUriMetadata.name = files[imageUploadResponseIndex].replace('.png', '');
 		tokenUriMetadata.description = `An adorable ${tokenUriMetadata.name} pup!`;
-		tokenUriMetadata.image = `ipfs://${imageUploadReponses[imageUploadReponseIndex].IpfsHash}`;
+		tokenUriMetadata.image = `ipfs://${imageUploadResponses[imageUploadResponseIndex].IpfsHash}`;
 		console.log(`Uploading ${tokenUriMetadata.name}... `);
 		//store the JSON to pinata / IPFS
-		const metadataUploadReponse = await storeTokenUriMetadata(tokenUriMetadata);
-		tokenUris.push(`ipfs://${metadataUploadReponse.IpfsHash}`);
+		const metadataUploadResponse =
+			await storeTokenUriMetadata(tokenUriMetadata);
+		tokenUris.push(`ipfs://${metadataUploadResponse.IpfsHash}`);
 	}
 	console.log('Token URIs Uploaded! They are: ');
 	console.log(tokenUris);
