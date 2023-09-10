@@ -4,3 +4,4 @@ cache
 .idea
 .env
 .DS_Store
+gas-report.txt
